@@ -7,7 +7,7 @@
           :columns="columns"
           :sort.sync="sort"
           @sort-change="handleSortChange"
-          :data="list.slice(0, 6)"
+          :data="list.slice(0, 7)"
         >
           <template slot-scope="scope">
             <td>{{scope.row.id}}</td>
@@ -16,9 +16,10 @@
             <td>{{scope.row.online_ip}}</td>
             <td>{{scope.row.role}}</td>
             <td>{{scope.row.create_time}}</td>
+            <td>{{scope.row.remark}}</td>
             <td>
               <mu-button color="primary" @click="showConfirm">更新用户</mu-button>
-              <mu-button color="error">删除用户</mu-button>
+              <mu-button color="error" @click="deleteUser(scope.row.id,scope.row.username)">删除用户</mu-button>
             </td>
           </template>
         </mu-data-table>
@@ -62,6 +63,11 @@ export default {
         {
           title: "创建时间",
           name: "create_time",
+          sortable: true
+        },
+        {
+          title: "备注",
+          name: "remark",
           sortable: true
         },
         {
@@ -143,7 +149,7 @@ export default {
           console.log(result);
           if (result) {
             //点击确定，提交更新
-            console.log(_this.list)
+            console.log(_this.list);
           } else {
             //点击取消，取消更新
           }
@@ -151,6 +157,37 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+    },
+    deleteUser(id, name) {
+      let _this = this;
+      let token = CookieUtils.getCookie("token");
+      _this.$confirm(`是否删除:  ${name}`, "删除用户")
+      .then(function(result) {
+        axios({
+          method: "post",
+          url: "/apis/api/manage/backend/delete/user",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          data: {
+            ids: `${id}`
+          }
+        })
+          .then(function(response) {
+            console.log(response);
+            let code = response.data.code;
+            if (code === 1) {
+              _this.$toast.message("删除成功");
+            } else {
+              _this.$toast.error("删除失败，请重试！");
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+            _this.$toast.error("系统错误，请联系管理员！");
+          });
+      });
     }
   },
   mounted() {

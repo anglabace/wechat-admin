@@ -16,7 +16,9 @@ import * as colors from 'muse-ui/lib/theme/colors';
 import 'muse-ui/lib/styles/base.less';
 
 import Message from 'muse-ui-message';
+import Toast from 'muse-ui-toast';
 Vue.use(Message);
+Vue.use(Toast);
 
 theme.add('custom-theme', {
   primary: "#2196f3",
