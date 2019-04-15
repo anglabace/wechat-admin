@@ -3,6 +3,7 @@
     <Menu/>
     <Headers/>
     <mu-container>
+      <router-view></router-view>
       <Member/>
     </mu-container>
   </div>
