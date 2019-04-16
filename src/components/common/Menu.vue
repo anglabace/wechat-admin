@@ -17,7 +17,14 @@
             <mu-icon class="toggle-icon" size="24" value="keyboard_arrow_down"></mu-icon>
           </mu-list-item-action>
           <mu-list-item button :ripple="false" slot="nested">
-            <mu-list-item-title>用户列表</mu-list-item-title>
+            <mu-list-item-title>
+              <router-link to="/member">用户列表</router-link>
+            </mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item button :ripple="false" slot="nested">
+            <mu-list-item-title>
+              <router-link to="/applyList">申请列表</router-link>
+            </mu-list-item-title>
           </mu-list-item>
         </mu-list-item>
         <mu-list-item
@@ -97,7 +104,7 @@ export default {
           text: "会员详情",
           disabled: true
         }
-      ],
+      ]
     };
   },
   methods: {
@@ -111,9 +118,7 @@ export default {
       this.selects.splice(index, 1);
     }
   },
-  mounted() {
-    
-  },
+  mounted() {}
 };
 </script>
 
@@ -136,5 +141,4 @@ export default {
 .header {
   margin-left: 360px;
 }
-
 </style>

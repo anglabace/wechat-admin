@@ -4,7 +4,7 @@
     <Headers/>
     <mu-container>
       <router-view></router-view>
-      <Member/>
+      <!-- <Member/> -->
     </mu-container>
   </div>
 </template>
@@ -30,7 +30,9 @@ export default {
       // 请求数据
     }
   },
-  mounted() {}
+  mounted() {
+    console.log(this)
+  }
 };
 </script>
 

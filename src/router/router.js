@@ -3,6 +3,7 @@ import Home from "@/components/Home"
 import Login from "@/components/Login"
 import Register from "@/components/Register"
 import Member from "@/components/Member/Member"
+import ApplyList from "@/components/Member/ApplyList"
 
 
 export const admin = [
@@ -30,7 +31,14 @@ export const admin = [
         path: '/Member',
         name: "member",
         component: Member,
+        title:"会员管理",
         component: resolve => require(['@/components/Member/Member'], resolve)
+      },
+      {
+        path: '/ApplyList',
+        name: "applyList",
+        component: ApplyList,
+        component: resolve => require(['@/components/Member/ApplyList'], resolve)
       },
     ]
   },

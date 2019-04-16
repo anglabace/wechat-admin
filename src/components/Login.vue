@@ -68,7 +68,7 @@ export default {
             let token = response.data.token;
             if(code === 1){
               CookieUtils.setCookie("token",token);
-              _this.$router.push('/');
+              _this.$router.push('/member');
             }
           })
           .catch(function(error) {

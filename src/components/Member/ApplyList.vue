@@ -10,13 +10,19 @@
           :data="list.slice(0, 7)"
         >
           <template slot-scope="scope">
-            <td>{{scope.row.id}}</td>
-            <td>{{scope.row.username}}</td>
-            <td>{{scope.row.online_time}}</td>
-            <td>{{scope.row.online_ip}}</td>
-            <td>{{scope.row.role}}</td>
             <td>{{scope.row.create_time}}</td>
-            <td>{{scope.row.remark}}</td>
+            <td>{{scope.row.game_character}}</td>
+            <td>{{scope.row.game_grade}}</td>
+            <td>{{scope.row.game_hero}}</td>
+            <td>{{scope.row.game_score}}</td>
+            <td>{{scope.row.game_style}}</td>
+            <td>{{scope.row.game_type}}</td>
+            <td>{{scope.row.is_champion}}</td>
+            <td>{{scope.row.is_check}}</td>
+            <td>{{scope.row.is_upload}}</td>
+            <td>{{scope.row.join_time}}</td>
+            <td>{{scope.row.result_img_url}}</td>
+            <td>{{scope.row.wx_nickname}}</td>
             <td>
               <mu-button color="primary" @click="showConfirm">更新用户</mu-button>
               <mu-button color="error" @click="deleteUser(scope.row.id,scope.row.username)">删除用户</mu-button>
@@ -39,35 +45,68 @@ export default {
         order: "asc"
       },
       columns: [
-        { title: "用户id", name: "id" },
-        {
-          title: "用户名称",
-          name: "username",
-          sortable: true
-        },
-        {
-          title: "最近上线时间",
-          name: "online_time",
-          sortable: true
-        },
-        {
-          title: "最近上线IP",
-          name: "online_ip",
-          sortable: true
-        },
-        {
-          title: "用户角色",
-          name: "role",
-          sortable: true
-        },
         {
           title: "创建时间",
-          name: "create_time",
+          name: "create_time"
+        },
+        {
+          title: "游戏位置",
+          name: "game_character",
           sortable: true
         },
         {
-          title: "备注",
-          name: "remark",
+          title: "游戏段位",
+          name: "game_grade",
+          sortable: true
+        },
+        {
+          title: "游戏英雄",
+          name: "game_hero",
+          sortable: true
+        },
+        {
+          title: "比赛积分",
+          name: "game_score",
+          sortable: true
+        },
+        {
+          title: "游戏风格",
+          name: "game_style",
+          sortable: true
+        },
+        {
+          title: "赛事类型",
+          name: "game_type",
+          sortable: true
+        },
+        {
+          title: "是否是最高得分者",
+          name: "is_champion",
+          sortable: true
+        },
+        {
+          title: "是否已审核结果",
+          name: "is_check",
+          sortable: true
+        },
+        {
+          title: "是否已上传比赛结果",
+          name: "is_upload",
+          sortable: true
+        },
+        {
+          title: "参赛时间",
+          name: "join_time",
+          sortable: true
+        },
+        {
+          title: "比赛结果地址",
+          name: "result_img_url",
+          sortable: true
+        },
+        {
+          title: "用户昵称",
+          name: "wx_nickname",
           sortable: true
         },
         {
@@ -91,21 +130,28 @@ export default {
     loadList() {
       // 调用请求数据的方法
       let _this = this;
-      console.log(_this);
+      // console.log(_this);
       let token = CookieUtils.getCookie("token");
       axios({
         method: "post",
-        url: "/apis/api/manage/backend/get/userList",
+        url: "/apis/api/manage/backend/get/gameApply/list",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`
         },
         data: {
+          stime: "2019-04-02 00:00:00",
+          etime: "2019-04-03 00:00:00",
           search: "",
-          sort: "create_time",
-          order: "desc",
+          is_join: 0,
+          is_champion: 0,
+          is_check: 0,
+          is_upload: 0,
+          game_type: 1,
           start: 0,
-          length: 20
+          length: 10,
+          sort: "create_time",
+          order: "asc"
         }
       })
         .then(function(response) {
@@ -188,8 +234,8 @@ export default {
               console.log(error);
               _this.$toast.error("系统错误，请联系管理员！");
             });
-        }else{
-          console.log("点击了取消")
+        } else {
+          console.log("点击了取消");
         }
       });
     }
